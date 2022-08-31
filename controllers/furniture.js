@@ -1,5 +1,6 @@
-const { response } = require('express')
-const Furniture = require('../models/Furniture')
+const { response } = require('express');
+require('dotenv').config();
+const Furniture = require('../models/Furniture');
 
 const getFurnitureList = async (req, res = response) => {
 
@@ -30,6 +31,14 @@ const getFurnitureList = async (req, res = response) => {
 const addFurniture = async (req, res = response) => {
 
     const { name } = req.body;
+    const password = req.header('x-password');
+
+    if (password !== process.env.PASSWORD_ADMIN) {
+        return res.status(401).json({
+            ok: false,
+            message: 'No tiene privilegios para modificar la base de datos'
+        });
+    }
 
     try {
         let furniture = await Furniture.findOne({ name });
