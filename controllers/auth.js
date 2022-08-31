@@ -1,6 +1,7 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const { generarJWT } = require('../helpers/jwt');
 
 const newUser = async (req, res = response) => {
 
@@ -20,6 +21,8 @@ const newUser = async (req, res = response) => {
         newUser.password = bcrypt.hashSync(password, salt);
         await newUser.save();
 
+        const token = await generarJWT(newUser.name, newUser.email);
+
         return res.status(201).json({
             ok: true,
             message: 'Cuenta creada correctamente',
@@ -27,7 +30,8 @@ const newUser = async (req, res = response) => {
                 name: newUser.name,
                 email: newUser.email,
                 basketList: []
-            }
+            },
+            token
         });
     } catch (error) {
         console.log(error);
@@ -59,6 +63,8 @@ const loginUser = async (req, res = response) => {
             });
         };
 
+        const token = await generarJWT(newUser.name, newUser.email);
+
         return res.status(200).json({
             ok: true,
             message: 'Inicio de sesión exitoso',
@@ -66,7 +72,8 @@ const loginUser = async (req, res = response) => {
                 name: user.name,
                 email: user.email,
                 basketList: user.basketList
-            }
+            },
+            token
         })
 
     } catch (error) {
@@ -76,11 +83,25 @@ const loginUser = async (req, res = response) => {
             message: 'Contacte con el administrador'
         });
     }
+}
 
+const revalidarToken = async (req, res = response) => {
 
+    const { name, email } = req;
+
+    // Generar JWT
+    const token = await generarJWT(name, email);
+
+    res.json({
+        ok: true,
+        name,
+        email,
+        token
+    });
 }
 
 module.exports = {
     newUser,
-    loginUser
+    loginUser,
+    revalidarToken
 }
