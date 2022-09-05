@@ -1,7 +1,6 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-require('dotenv').config();
 const { generarJWT } = require('../helpers/jwt');
 
 const newUser = async (req, res = response) => {
