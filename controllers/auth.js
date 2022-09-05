@@ -1,6 +1,7 @@
 const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+require('dotenv').config();
 const { generarJWT } = require('../helpers/jwt');
 
 const newUser = async (req, res = response) => {
@@ -63,7 +64,7 @@ const loginUser = async (req, res = response) => {
             });
         };
 
-        const token = await generarJWT(newUser.name, newUser.email);
+        const token = await generarJWT(user.name, user.email);
 
         return res.status(200).json({
             ok: true,
@@ -87,7 +88,7 @@ const loginUser = async (req, res = response) => {
 
 const revalidarToken = async (req, res = response) => {
 
-    const { name, email } = req.body;
+    const { name, email } = req;
 
     // Generar JWT
     const token = await generarJWT(name, email);
