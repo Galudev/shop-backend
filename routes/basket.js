@@ -5,8 +5,8 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 router.use(validarJWT);
 
-router.post('/', addItem);
-router.delete('/', removeItem);
+router.post('/:id', addItem);
+router.delete('/:id', removeItem);
 router.put('/', updateItem);
 
 module.exports = router;

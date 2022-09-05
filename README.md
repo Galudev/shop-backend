@@ -11,6 +11,8 @@ Para usarla en local, realizar peticiones HTTP a localhost:4000/api
 
 A continuación se muestra cómo realizar las distintas peticiones y códigos de ejemplo tanto de peticiones como de las respuestas.
 
+** Los códigos mostrados son simples ejemplos, las listas contarán con tantos objetos como se encuentren en la base de datos.
+
 * Añadir un nuevo mueble a la base de datos: Realizar una petición POST a localhost:4000/api/furniture/new cuyo body contenga un objeto con los atributos
     ~~~
     {
@@ -137,13 +139,7 @@ A continuación se muestra cómo realizar las distintas peticiones y códigos de
     }
     ~~~
 
-* Añadir un nuevo item al carrito del usuario: Realizar una petición POST a localhost:4000/api/basket cuyo body contenga un objeto con los atributos email e id (el id del mueble correspondiente) en formato JSON. Ejemplo:
-    ~~~
-    {
-        "email": "juan23@gmail.com",
-        "id": "630f3e015a3b14e26842df06"
-    }
-    ~~~
+* Añadir un nuevo item al carrito del usuario: Realizar una petición POST a localhost:4000/api/basket/id, sustituyendo id por el id del elemento a añadir.
     Además, hay que incluir en el header un token válido en ese momento, cuya key recibe el nombre de x-token.
 
     Si se añade correctamente, devuelve el siguiente objeto JSON:
@@ -160,10 +156,9 @@ A continuación se muestra cómo realizar las distintas peticiones y códigos de
     }
     ~~~
 
-* Actualizar el número de un item en el carrito del usuario: Realizar una petición PUT a localhost:4000/api/basket cuyo body contenga un objeto con los atributos email, id (el id del mueble correspondiente) y count (con el nuevo valor a tomar) en formato JSON. Ejemplo:
+* Actualizar el número de un item en el carrito del usuario: Realizar una petición PUT a localhost:4000/api/basket cuyo body contenga un objeto con los atributos id (el id del mueble correspondiente) y count (con el nuevo valor a tomar) en formato JSON. Ejemplo:
     ~~~
     {
-        "email": "juan23@gmail.com",
         "id": "630f3e015a3b14e26842df06",
         "count": 4
     }
@@ -184,13 +179,7 @@ A continuación se muestra cómo realizar las distintas peticiones y códigos de
     }
     ~~~
 
-* Eliminar un item del carrito del usuario: Realizar una petición DELETE a localhost:4000/api/basket cuyo body contenga un objeto con los atributos email e id (el id del mueble correspondiente) en formato JSON. Ejemplo:
-    ~~~
-    {
-        "email": "juan23@gmail.com",
-        "id": "630f3e015a3b14e26842df06"
-    }
-    ~~~
+* Eliminar un item del carrito del usuario: Realizar una petición DELETE a localhost:4000/api/basket/id, sustituyendo id por el id del elemento a eliminar.
     Además, hay que incluir en el header un token válido en ese momento, cuya key recibe el nombre de x-token.
 
     Si se elimina correctamente, devuelve el siguiente objeto JSON:
@@ -210,5 +199,3 @@ A continuación se muestra cómo realizar las distintas peticiones y códigos de
         message: 'Mensaje con la información del error que ha tenido lugar'
     }
     ~~~
-
-** Los códigos mostrados como respuesta son simples ejemplos, las listas contarán con tantos objetos como se encuentren en la base de datos.

@@ -2,7 +2,8 @@ const { response } = require('express');
 const User = require('../models/User');
 
 const addItem = async (req, res = response) => {
-    const { email, id } = req.body;
+    const id = req.params.id;
+    const { email } = req;
 
     try {
         const user = await User.findOne({ email });
@@ -37,7 +38,8 @@ const addItem = async (req, res = response) => {
 };
 
 const removeItem = async (req, res = response) => {
-    const { email, id } = req.body;
+    const id = req.params.id;
+    const { email } = req;
 
     try {
         const user = await User.findOne({ email });
@@ -69,7 +71,8 @@ const removeItem = async (req, res = response) => {
 };
 
 const updateItem = async (req, res = response) => {
-    const { email, id, count } = req.body;
+    const { id, count } = req.body;
+    const { email } = req;
 
     try {
         const user = await User.findOne({ email });
