@@ -21,7 +21,7 @@ const newUser = async (req, res = response) => {
         newUser.password = bcrypt.hashSync(password, salt);
         await newUser.save();
 
-        const token = await generarJWT(newUser.name, newUser.email);
+        const token = await generarJWT(newUser.email);
 
         return res.status(201).json({
             ok: true,
@@ -63,7 +63,7 @@ const loginUser = async (req, res = response) => {
             });
         };
 
-        const token = await generarJWT(user.name, user.email);
+        const token = await generarJWT(user.email);
 
         return res.status(200).json({
             ok: true,
@@ -87,16 +87,20 @@ const loginUser = async (req, res = response) => {
 
 const revalidarToken = async (req, res = response) => {
 
-    const { name, email } = req;
+    const { email } = req;
 
     // Generar JWT
-    const token = await generarJWT(name, email);
+    const token = await generarJWT(email);
+    const user = await User.findOne({ email });
 
     res.json({
         ok: true,
         message: 'Token renovado correctamente',
-        name,
-        email,
+        user: {
+            name: user.name,
+            email: user.email,
+            basketList: user.basketList
+        },
         token
     });
 }

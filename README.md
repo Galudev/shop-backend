@@ -121,23 +121,19 @@ A continuación se muestra cómo realizar las distintas peticiones y códigos de
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmV3VXNlciIsImlhdCI6MTY2MTk0MDk5NCwiZXhwIjoxNjYxOTQ0NTk0fQ.4CrWjfl2WjgHx2Itm2dinWjYLorqyx_Xy7wak0Hs4rw"
     }
     ~~~
-* Revalidar un token, usado para extender la sesión en el tiempo (un token solo es válido durante 1 hora tras su generación): Realizar una petición GET a localhost:4000/api/auth/renew cuyo body contenga un objeto con los atributos name e email en formato JSON. Ejemplo:
-    ~~~
-    {
-        "name": "Juan",
-        "email": "juan23@gmail.com"
-    }
-    ~~~
-    Además, hay que incluir en el header un token válido en ese momento, cuya key recibe el nombre de x-token.
+* Revalidar un token, usado para extender la sesión en el tiempo (un token solo es válido durante 1 hora tras su generación): Realizar una petición GET a localhost:4000/api/auth/renew incluyendo en el header un token válido en ese momento, cuya key recibe el nombre de x-token.
 
     Si el token es válido, se genera uno nuevo y devuelve la siguiente respuesta:
     ~~~
     {
         "ok": true,
         "message": "Token renovado correctamente",
-        "name": "Juan",
-        "email": "juan23@gmail.com",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSnVhbiIsImVtYWlsIjoianVhbjIzQGdtYWlsLmNvbSIsImlhdCI6MTY2MTk0MTcyOCwiZXhwIjoxNjYxOTQ1MzI4fQ.7sYNSmwYgbwuJuzRf0lMrIVYQQ1hybnOdkmS55nyPy4"
+        "user": {
+            "name": "Juan",
+            "email": "juan23@gmail.com",
+            "basketList": []
+        },
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW4yM0BnbWFpbC5jb20iLCJpYXQiOjE2NjIzODMwMzAsImV4cCI6MTY2MjM4NjYzMH0.se09rLsNNaMVuBBAINyJtiQ7fgfbqCZC68aX_1Qb_Mk"
     }
     ~~~
 
