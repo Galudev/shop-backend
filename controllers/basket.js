@@ -117,8 +117,39 @@ const updateItem = async (req, res = response) => {
     };
 };
 
+const deleteAll = async (req, res = response) => {
+    const { email } = req;
+
+    try {
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({
+                ok: false,
+                message: 'Ese usuario no existe en la base de datos'
+            });
+        }
+
+        user.basketList = []
+        const userUpdated = await User.findOneAndUpdate({ email }, user, { new: true });
+
+        return res.status(200).json({
+            ok: true,
+            message: 'Elementos eliminados del carrito correctamente',
+            basketList: userUpdated.basketList
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            message: 'Contacte con el administrador'
+        });
+    };
+}
+
 module.exports = {
     addItem,
     removeItem,
-    updateItem
+    updateItem,
+    deleteAll
 }

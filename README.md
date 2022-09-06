@@ -191,6 +191,19 @@ A continuación se muestra cómo realizar las distintas peticiones y códigos de
     }
     ~~~
 
+* Eliminar todos los items del carrito del usuario: Realizar una petición DELETE a localhost:4000/api/basket.
+    Además, hay que incluir en el header un token válido en ese momento, cuya key recibe el nombre de x-token.
+
+    Si se elimina correctamente, devuelve el siguiente objeto JSON:
+    ~~~
+    {
+        "ok": true,
+        "message": "Item eliminado del carrito correctamente",
+        "basketList": []
+    }
+    ~~~
+
+
 * Si en alguna petición tiene lugar un error, devuelve el siguiente objeto JSON:
 
     ~~~
